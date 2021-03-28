@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>API Advice</title>
+	
+	<script language="javascript">
+		function getSlip(){
+			request = new XMLHttpRequest();
+			console.log("Request object created");
+			request.open("GET","https://api.adviceslip.com/advice",true);
+			console.log("Opened request file");
+			request.onreadystatechange = function() {
+				console.log("Readystate changed");
+				if (request.readyState == 4 && request.status == 200) {
+					console.log("Response recieved");
+					result = request.responseText;
+					advice = JSON.parse(result);
+					strHTML = "Advice: " + advice.slip.advice;
+					document.getElementById("data").innerHTML = strHTML;
+				} else if (request.readyState == 4 && request.status != 200) {
+					document.getElementById("data").innerHTML = "Something is wrong! 1";
+				} else {
+					document.getElementById("data").innerHTML = "Something is wrong! 2";
+				}
+			}
+			request.send();
+		}
+	</script>
+	
+</head>
+
+<body onload = "getSlip()">	
+	<h1>Reload for random advice</h1>
+	<div id="data"></div>
+	<div id="questions">
+		<h2>Question answers</h2>
+		<p>The API I chose gives random advice every time you reload the page.</p>
+		<p>The webiste I found the api from is <a href="https://github.com/public-apis/public-apis#personality">this</a>, which has many different API to choose from. The website that has the API (which I found from that website) is <a href="https://api.adviceslip.com/">here</a></p>
+		<p>The methods I used were XMLHttpRequest(), request.open using GET and the url of the API.</p>
+		<p>One application this API would be useful would be an app that notifies the user of good advice throughout the day. Another application is a website that generates random advice (similar to the webpage I made for this assignment).</p>
+	</div>
+	
+</body>
+</html>
